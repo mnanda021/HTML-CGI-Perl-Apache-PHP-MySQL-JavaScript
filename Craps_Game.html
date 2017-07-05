@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Craps_Game</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="css/layout.css" type="text/css">
+
+
+      <script>
+         // variables used to refer to page elements
+         var pointDie1Img; // refers to first die point img
+         var pointDie2Img; // refers to second die point img
+         var rollDie1Img; // refers to first die roll img
+         var rollDie2Img; // refers to second die roll img
+         var messages; // refers to "messages" paragraph
+         var playButton; // refers to Play button
+         var rollButton; // refers to Roll button
+         //var dicerolling; // refers to audio clip for dice
+
+         // other variables used in program
+         var myPoint; // point if no win/loss on first roll
+         var die1Value; // value of first die in current roll
+         var die2Value; // value of second die in current roll
+
+         // starts a new game
+         function startGame() 
+         {
+            // get the page elements that we'll interact with
+            //dicerolling = document.getElementById( "dicerolling" );
+            pointDie1Img = document.getElementById( "pointDie1" );
+            pointDie2Img = document.getElementById( "pointDie2" );
+            rollDie1Img = document.getElementById( "rollDie1" );
+            rollDie2Img = document.getElementById( "rollDie2" );
+            messages = document.getElementById( "messages" );
+            playButton = document.getElementById( "play" );
+            rollButton = document.getElementById( "roll" );
+
+            // prepare the GUI
+            rollButton.disabled = true; // disable rollButton
+            setImage( pointDie1Img ); // reset image for new game
+            setImage( pointDie2Img ); // reset image for new game
+            setImage( rollDie1Img ); // reset image for new game
+            setImage( rollDie2Img ); // reset image for new game
+
+            myPoint = 0; // there is currently no point 
+            firstRoll(); // roll the dice to start the game
+         } // end function startGame
+
+         // perform first roll of the game
+         function firstRoll()
+         {
+            var sumOfDice = rollDice(); // first roll of the dice
+
+            // determine if the user won, lost or must continue rolling
+            switch (sumOfDice) 
+            {
+               case 7: case 11: // win on first roll
+                  messages.innerHTML = 
+                     "You Win!!! Click Play to play again.";
+                  break;
+               case 2: case 3: case 12: // lose on first roll
+                  messages.innerHTML = 
+                     "Sorry. You Lose. Click Play to play again.";
+                  break;
+               default: // remember point
+                  myPoint = sumOfDice;
+                  setImage( pointDie1Img, die1Value );
+                  setImage( pointDie2Img, die2Value );
+                  messages.innerHTML = "Roll Again!";
+                  rollButton.disabled = false; // enable rollButton
+                  playButton.disabled = true; // disable playButton
+                  break;
+            } // end switch
+         } // end function firstRoll
+
+         // called for subsequent rolls of the dice
+         function rollAgain()
+         {
+            var sumOfDice = rollDice(); // subsequent roll of the dice
+
+            if (sumOfDice == myPoint) 
+            {
+               messages.innerHTML =
+                  "You Win!!! Click Play to play again.";
+               rollButton.disabled = true; // disable rollButton
+               playButton.disabled = false; // enable playButton
+            } // end if
+            else if (sumOfDice == 7) // craps
+            {
+               messages.innerHTML = 
+                  "Sorry. You Lose. Click Play to play again.";
+               rollButton.disabled = true; // disable rollButton
+               playButton.disabled = false; // enable playButton
+            } // end else if
+         } // end function rollAgain
+
+         // roll the dice
+         function rollDice() 
+         {
+            //dicerolling.play(); // play dice rolling sound
+			 	console.log("before the dice roll");
+            // clear old die images while rolling sound plays
+            die1Value = NaN;
+            die2Value = NaN;
+            
+	    
+            die1Value = Math.floor(1 + Math.random() * 6);
+            die2Value = Math.floor(1 + Math.random() * 6);
+			 showDice();
+			 console.log("after the dice roll");
+            return die1Value + die2Value;
+			 
+         } // end function rollDice
+
+         // display rolled dice
+         function showDice()
+         {
+            setImage( rollDie1Img, die1Value );
+            setImage( rollDie2Img, die2Value );
+         } // end function showDice
+
+         // set image source for a die
+         function setImage( dieImg, dieValue ) 
+         {
+            if ( isFinite( dieValue ) )
+               dieImg.src = "die" + dieValue + ".png";
+            else
+               dieImg.src = "blank.png";
+         } // end function setImage
+
+         // register event liseners
+         function start()
+         {
+            var playButton = document.getElementById( "play" );
+            playButton.addEventListener( "click", startGame, false );
+            var rollButton = document.getElementById( "roll" );
+            rollButton.addEventListener( "click", rollAgain, false );
+            //var diceSound = document.getElementById( "dicerolling" );
+           // diceSound.addEventListener( "ended", showDice, false );
+         } // end function start
+
+         window.addEventListener( "load", start, false );
+      </script>
+      <style type = "text/css">
+         p.red  { color: cadetblue; font: bold;font-size: 25px;}
+         .img1    { width:80px; height: 100px; margin: auto;}
+         .pointDiv   { border: 5px ridge cadetblue;height: 150px; 
+                  padding: 10px; width: 200px; margin-left: 250px;
+                  margin-bottom: 10px; }
+		  .rollDiv {
+			  border: 5px ridge cadetblue; 
+                  padding: 10px; width: 200px; height: 150px;
+                  margin-bottom: 10px; margin-left: 250px;
+		  }
+		  .button{
+			  font-family: "Roboto", sans-serif;
+			  
+			  background:#f2f2f2;
+			  width: 160px;
+			  border: 10px;
+			  border-color: ;
+			  padding: 10px;
+			  color:cadetblue;
+			  font-size: 25px;
+			  -webkit-transition: all 0.3 ease;
+			  transition: all 0.3 ease;
+			  cursor: pointer;
+		  }
+		  
+         .point { margin: 0px; }
+      </style>
+      <link href="css/dropdown.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+      <h1><a href="home.html">Fashion Club</a></h1>
+      <h2>The joy of dressing is an Art!</h2>
+    </div>
+    <nav>
+     <ul>
+      <ul class="dropdown">
+        <li><a href="Club.html">Club</a>
+        <div class="dropdown-content">
+    <a href="Draw_Me.html">Draw-Game</a>
+			<a href="Craps_Game.html">Craps-Game</a>
+<a href="winestore.php">Wine Store</a>
+  </div>
+        </li>
+        </ul>
+        <ul class="dropdown">
+        <li><a href="Gallery.html">Gallery</a>
+        <div class="dropdown-content">
+    <a href="Draw_Me.html">Career</a>
+    <a href="Craps_Game.html">Future Events</a>
+   <a href="awards.html">Awards</a>
+  </div>
+		</li>
+        </ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="home.html">Logout</a></li>
+        
+      </ul>
+    </nav>
+  </header>
+</div>
+<!-- content -->
+<div class="wrapper row2">
+  <div id="container" class="clear">
+    
+    <!-- main content -->
+    <div id="homepage">
+    
+      <section id="intro" class="last clear">
+        <article>
+          <figure><h2>Welcome to play Craps-Game</h2>
+              <p>Fashion Club welcomes you with warm greetings. We have also introduced games in our club. You can play sample game called Craps-Game. We assure you lots of fun and happiness while your visit.</p>
+              
+             
+            <figcaption>
+             <p id = "messages" class = "red">Click Play to start the game</p>
+             <!-- <audio id = "dicerolling" preload = "auto">
+         <source src = "http://test.deitel.com/dicerolling.mp3"
+            type = "audio/mpeg">
+         <source src = "http://test.deitel.com/dicerolling.ogg"
+            type = "audio/ogg">
+         </audio>-->
+     <!-- <p><a href = "CrapsRules.html">Click here for a short video
+         explaining the basic Craps rules</a></p>-->
+      <div class = "pointDiv">
+         <p class = "point">Point is:</p>
+         <img id = "pointDie1" src = "blank.png"  
+            alt = "Die 1 of Point Value" class="img1">
+         <img id = "pointDie2" src = "blank.png"
+            alt = "Die 2 of Point Value" class="img1">
+      </div>
+      <div class = "rollDiv" id="pointDiv1">
+         <img id = "rollDie1" src = "blank.png" 
+            alt = "Die 1 of Roll Value" class="img1">
+         <img id = "rollDie2" src = "blank.png" 
+            alt = "Die 2 of Roll Value" class="img1">
+      </div>
+      
+      <form action = "#">
+         <input id = "play" type = "button" value = "Play" class="button">
+         <input id = "roll" type = "button" value = "Roll" class="button" disabled>
+      </form>
+      
+               </figcaption>
+          </figure>
+        </article>
+      </section>
+      <!-- / Introduction -->
+    </div>
+    <!-- / content body -->
+  </div>
+</div>
+<!-- Footer -->
+<div class="wrapper row3">
+  <div id="footer" class="clear">
+  <div id="media">
+<h2 class="title">Connect with Us</h2>
+      <nav>
+        <ul>
+          <li><a href="https://www.facebook.com"><img src="images/icons/facebook.png" width="32" height="32" alt=""/></a></li>
+          <li><a href="https://www.instagram.com"><img src="images/icons/instagram.png" width="32" height="32" alt=""/></a></li>
+          <li><a href="https://www.twitter.com"><img src="images/icons/twitter.png" width="32" height="32" alt=""/></a></li>
+          <li><a href="https://www.googleplus.com"><img src="images/icons/google-plus.png" width="32" height="32" alt=""/></a></li>
+        </ul>
+      </nav>
+      </div>
+      <br><br><br><br>
+    <!-- Section One -->
+    <section class="one_quarter">
+      <h2 class="title">For Education</h2>
+      <nav>
+        <ul>
+          <li><a href="http://www.bradley.edu/">Fashion and Education</a></li>
+          <li><a href="http://www.bradley.edu/">Designing Tutorial</a></li>
+          <li><a href="http://www.bradley.edu/">Shop for College</a></li>
+          <li><a href="http://www.bradley.edu/">Accessories</a></li>
+        </ul>
+      </nav>
+    </section>
+    <!-- Section Two -->
+    <section class="one_quarter">
+      <h2 class="title">See Our Fashion Collection</h2>
+      <nav>
+        <ul>
+          <li><a href="https://www.amazon.com/"><img src="images/icons/amazon.png" width="32" height="16" alt=""/></a></li>
+          <li><a href="https://www.ebay.com/"><img src="images/icons/ebay.png" width="32" height="16" alt=""/></a></li>
+          <li><a href="https://www.foursquare.com/"><img src="images/icons/foursquare.png" width="32" height="16" alt=""/></a></li>
+          <li><a href="https://www.pinterest.com/"><img src="images/icons/pinterest.png" width="32" height="16" alt=""/></a></li>
+          
+        </ul>
+      </nav>
+    </section>
+    <!-- Section Three -->
+    <section class="one_quarter">
+      <h2 class="title">Know about Fashion</h2>
+      <nav>
+        <ul>
+          <li><a href="#"></a></li>
+          <li><a href="#">Newyork Fashion week</a></li>
+          <li><a href="#">Summer Fashion -Paris</a></li>
+          <li><a href="#">Women's Fashion Style</a></li>
+          <li><a href="#">Victoria Secret</a></li>
+        </ul>
+      </nav>
+    </section>
+    
+    <!-- Section Four -->
+    <section class="one_quarter lastbox">
+      <h2 class="title">Career</h2>
+      <nav>
+        <ul>
+          <li><a href="http://www.bradley.edu/campuslife/">Browse Jobs</a></li>
+          <li><a href="http://www.bradley.edu/admissions/">Our Employers</a></li>
+          <li><a href="http://www.bradley.edu/academic/colleges/cfa/">Internships</a></li>
+          <li><a href="#http://www.bradley.edu/scc/">Job Advice</a></li>
+        </ul>
+      </nav>
+    </section>
+    <!-- / Section -->
+    
+    
+  </div>
+</div>
+<!-- Copyright -->
+<div class="wrapper row4">
+  <footer id="copyright" class="clear">
+    <p class="fl_left">Copyright &copy; 2017 - <a href="#">Bradley University</a></p>
+    <p class="fl_right">By Mahananda Nyamagouda</p>
+  </footer>
+</div>
+</body>
+</html>
+

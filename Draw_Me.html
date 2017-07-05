@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Drawing</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="css/layout.css" type="text/css">
+<link rel = "stylesheet" type = "text/css" href = "style.css">
+<link href="css/dropdown.css" rel="stylesheet" type="text/css">
+<script src = "draw.js"></script>
+<script type="text/javascript">
+	function start(){
+		var current = new Date();
+		document.getElementById("strings").innerHTML="<p style=\"color:red;text-align:right;font-size:15px;\">Date : "+current.toString()+"</p>";
+			}
+	window.addEventListener("load",start,false);
+	</script>
+</head>
+<body>
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+      <h1><a href="home.html">Fashion Club</a></h1>
+      <h2>The joy of dressing is an Art!</h2>
+    </div>
+    <nav>
+     <ul>
+      <ul class="dropdown">
+        <li><a href="Club.html">Club</a>
+        <div class="dropdown-content">
+    <a href="Draw_Me.html">Draw-Game</a>
+    <a href="Craps_Game.html">Craps-Game</a>
+<a href="winestore.php">Wine Store</a>
+  </div>
+        </li>
+        </ul>
+        <ul class="dropdown">
+        <li><a href="Gallery.html">Gallery</a>
+         <div class="dropdown-content">
+    <a href="Draw_Me.html">Career</a>
+    <a href="Craps_Game.html">Future Events</a>
+   <a href="awards.html">Awards</a>
+  </div>
+		</li>
+        </ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="home.html">Logout</a></li>
+        
+      </ul>
+    </nav>
+  </header>
+</div>
+<!-- content -->
+<div class="wrapper row2">
+ <p><section id="strings"></section></p>
+  <div id="container" class="clear">
+    
+    <!-- main content -->
+    <div id="homepage">
+    
+      <section id="intro" class="last clear">
+        <article>
+          <figure><h2>Welcome to Our Drawing Page</h2>
+              <p>Fashion Club welcomes you with warm greetings. We have also introduce our new drawing page to entice people to visit us. We intend to give people lots of fun.</p>
+             
+            <figcaption>
+             <div class="canvas">
+              <table id = "canvas">
+         <caption>Hold <em>Ctrl</em> (or <em>Control</em>) to draw Green. 
+            Hold <em>Shift</em> to draw orange.</caption>
+         	<tbody id = "tablebody"></tbody>
+      			</table>
+              </div>
+               </figcaption>
+          </figure>
+        </article>
+      </section>
+      <!-- / Introduction -->
+    </div>
+    <!-- / content body -->
+  </div>
+</div>
+<!-- Footer -->
+<div class="wrapper row3">
+  <div id="footer" class="clear">
+  <div id="media">
+<h2 class="title">Connect with Us</h2>
+      <nav>
+        <ul>
+          <li><a href="https://www.facebook.com"><img src="images/icons/facebook.png" width="32" height="32" alt=""/></a></li>
+          <li><a href="https://www.instagram.com"><img src="images/icons/instagram.png" width="32" height="32" alt=""/></a></li>
+          <li><a href="https://www.twitter.com"><img src="images/icons/twitter.png" width="32" height="32" alt=""/></a></li>
+          <li><a href="https://www.googleplus.com"><img src="images/icons/google-plus.png" width="32" height="32" alt=""/></a></li>
+        </ul>
+      </nav>
+      </div>
+      <br><br><br><br>
+    <!-- Section One -->
+    <section class="one_quarter">
+      <h2 class="title">For Education</h2>
+      <nav>
+        <ul>
+          <li><a href="http://www.bradley.edu/">Fashion and Education</a></li>
+          <li><a href="http://www.bradley.edu/">Designing Tutorial</a></li>
+          <li><a href="http://www.bradley.edu/">Shop for College</a></li>
+          <li><a href="http://www.bradley.edu/">Accessories</a></li>
+        </ul>
+      </nav>
+    </section>
+    <!-- Section Two -->
+    <section class="one_quarter">
+      <h2 class="title">See Our Fashion Collection</h2>
+      <nav>
+        <ul>
+          <li><a href="https://www.amazon.com/"><img src="images/icons/amazon.png" width="32" height="16" alt=""/></a></li>
+          <li><a href="https://www.ebay.com/"><img src="images/icons/ebay.png" width="32" height="16" alt=""/></a></li>
+          <li><a href="https://www.foursquare.com/"><img src="images/icons/foursquare.png" width="32" height="16" alt=""/></a></li>
+          <li><a href="https://www.pinterest.com/"><img src="images/icons/pinterest.png" width="32" height="16" alt=""/></a></li>
+          
+        </ul>
+      </nav>
+    </section>
+    <!-- Section Three -->
+    <section class="one_quarter">
+      <h2 class="title">Know about Fashion</h2>
+      <nav>
+        <ul>
+          <li><a href="#"></a></li>
+          <li><a href="#">Newyork Fashion week</a></li>
+          <li><a href="#">Summer Fashion -Paris</a></li>
+          <li><a href="#">Women's Fashion Style</a></li>
+          <li><a href="#">Victoria Secret</a></li>
+        </ul>
+      </nav>
+    </section>
+    
+    <!-- Section Four -->
+    <section class="one_quarter lastbox">
+      <h2 class="title">Career</h2>
+      <nav>
+        <ul>
+          <li><a href="http://www.bradley.edu/campuslife/">Browse Jobs</a></li>
+          <li><a href="http://www.bradley.edu/admissions/">Our Employers</a></li>
+          <li><a href="http://www.bradley.edu/academic/colleges/cfa/">Internships</a></li>
+          <li><a href="#http://www.bradley.edu/scc/">Job Advice</a></li>
+        </ul>
+      </nav>
+    </section>
+    <!-- / Section -->
+    
+    
+  </div>
+</div>
+<!-- Copyright -->
+<div class="wrapper row4">
+  <footer id="copyright" class="clear">
+    <p class="fl_left">Copyright &copy; 2017 - <a href="#">Bradley University</a></p>
+    <p class="fl_right">By Mahananda Nyamagouda</p>
+  </footer>
+</div>
+</body>
+</html>
+
