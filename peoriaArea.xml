@@ -1,0 +1,13 @@
+<markers>
+  <!-- Dont use copy and paste on this XML file, use "View Source" or "Save As"
+       What the browser displays is *interpreted* XML, not XML source. -->
+ <marker lat="40.670483" lng="-89.552994" html="Some stuff to display in the&lt;br&gt;East Peoria Window"  label="East Peoria" />
+ <marker lat="40.606391" lng="-89.462357" html="Some stuff to display in the&lt;br&gt;Morton Window" label="Morton" />
+ <marker lat="40.918182" lng="-89.489822" html="Some stuff to display in the&lt;br&gt;Chillicothe Window"  label="Chillicothe" />
+ <marker lat="41.881832" lng="-87.623177" html="Some stuff to display in the&lt;br&gt;Chicago, IL"  label="Chicago" />
+ <marker lat="43.224194" lng="-86.235809" html="Some stuff to display in the&lt;br&gt;Muskegon, MI"  label="Muskegon" />
+ <marker lat="34.426388" lng="-117.300880" html="Some stuff to display in the&lt;br&gt;Hesperia, CA "  label="Hesperia" />
+ <marker lat="36.850769" lng="-76.285873" html="Some stuff to display in the&lt;br&gt;Norfolk, VA"  label="Norfolk" />
+ <marker lat="36.974117" lng="-122.030792" html="Santa Cruz&lt;br&gt;Santa Cruz, CA"  label="SantaCruz" />
+ <marker lat="37.687923" lng="-122.470207" html="Bay area&lt;br&gt;Daly City, CA"  label="DalyCity" />
+</markers> 

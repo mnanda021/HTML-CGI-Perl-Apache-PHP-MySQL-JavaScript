@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/layout.css" type="text/css">
+<link href="css/dropdown.css" rel="stylesheet" type="text/css">
+    <title>Find Here</title>
+    
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 70%;
+		  width: 80%;
+		  margin-left: 150px;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin:0;
+		  margin-left: auto;
+        padding: 0;
+		  background: white;
+      }
+		input[type="text"] {
+    font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width:350px;
+  border:outset;
+  margin: 0 0 15px;
+  padding: 5px;
+		margin-left: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+      #description {
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+      }
+
+      #infowindow-content .title {
+        font-weight: bold;
+      }
+
+      #infowindow-content {
+        display: none;
+      }
+
+      #map #infowindow-content {
+        display: inline;
+      }
+
+      .pac-card {
+        margin: 10px 10px 0 0;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+        font-family: Roboto;
+      }
+
+      #pac-container {
+        padding-bottom: 12px;
+        margin-right: 12px;
+      }
+
+      .pac-controls {
+        display: inline-block;
+        padding: 5px 11px;
+      }
+
+      .pac-controls label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
+
+      #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 400px;
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe;
+      }
+
+      #title {
+        color: #fff;
+        background-color: #4d90fe;
+        font-size: 25px;
+        font-weight: 500;
+        padding: 6px 12px;
+      }
+      #target {
+        width: 345px;
+      }
+    </style>
+    <script type="text/javascript">
+	function start(){
+		var current = new Date();
+		document.getElementById("strings").innerHTML="<p style=\"color:red;text-align:right;font-size:15px;\">Date : "+current.toString()+"</p>";
+			}
+	window.addEventListener("load",start,false);
+	</script>
+  </head>
+  <body>
+   <div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+      <h1><a href="home.html">Fashion Club</a></h1>
+      <h2>The joy of dressing is an Art!</h2>
+    </div>
+    <nav>
+     <ul>
+      <ul class="dropdown">
+        <li><a href="Club.html">Club</a>
+        <div class="dropdown-content">
+    <a href="Draw_Me.html">Draw-Game</a>
+    <a href="Craps_Game.html">Craps-Game</a>
+        <a href="winestore.php">wine store</a>
+        <a href="map.html">Find us here</a>
+  </div>
+        </li>
+        </ul>
+        <ul class="dropdown">
+        <li><a href="Gallery.html">Gallery</a>
+ <div class="dropdown-content">
+    <a href="Draw_Me.html">Career</a>
+    <a href="Craps_Game.html">Future Events</a>
+    <a href="awards.html">Awards</a>
+  </div>
+		</li>
+        </ul><li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="home.html">Logout</a></li>
+        
+      </ul>
+    </nav>
+  </header>
+</div>
+    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+    <div id="map"></div>
+    <script>
+      // This example adds a search box to a map, using the Google Place Autocomplete
+      // feature. People can enter geographical searches. The search box will return a
+      // pick list containing a mix of places and predicted search terms.
+
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+      function initAutocomplete() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -33.8688, lng: 151.2195},
+          zoom: 13,
+          mapTypeId: 'roadmap'
+        });
+
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+          searchBox.setBounds(map.getBounds());
+        });
+
+        var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+
+          // Clear out the old markers.
+          markers.forEach(function(marker) {
+            marker.setMap(null);
+          });
+          markers = [];
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            if (!place.geometry) {
+              console.log("Returned place contains no geometry");
+              return;
+            }
+            var icon = {
+              url: place.icon,
+              size: new google.maps.Size(71, 71),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(17, 34),
+              scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker for each place.
+            markers.push(new google.maps.Marker({
+              map: map,
+              icon: icon,
+              title: place.name,
+              position: place.geometry.location
+            }));
+
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+          map.fitBounds(bounds);
+        });
+      }
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAeNiJe9RRFKgIMX96GJtGfiBtFrStJafQ&libraries=places&callback=initAutocomplete"
+         async defer></script>
+         <div class="wrapper row3">
+  <div id="footer" class="clear">
+  <div id="media">
+<h2 class="title">Connect with Us</h2>
+      <nav>
+        <ul>
+          <li><a href="https://www.facebook.com"><img src="images/icons/facebook.png" width="32" height="32" alt=""/></a></li>
+          <li><a href="https://www.instagram.com"><img src="images/icons/instagram.png" width="32" height="32" alt=""/></a></li>
+          <li><a href="https://www.twitter.com"><img src="images/icons/twitter.png" width="32" height="32" alt=""/></a></li>
+          <li><a href="https://www.googleplus.com"><img src="images/icons/google-plus.png" width="32" height="32" alt=""/></a></li>
+        </ul>
+      </nav>
+      </div>
+      <br><br><br><br>
+    <!-- Section One -->
+    <section class="one_quarter">
+      <h2 class="title">For Education</h2>
+      <nav>
+        <ul>
+          <li><a href="http://www.bradley.edu/">Fashion and Education</a></li>
+          <li><a href="http://www.bradley.edu/">Designing Tutorial</a></li>
+          <li><a href="http://www.bradley.edu/">Shop for College</a></li>
+          <li><a href="http://www.bradley.edu/">Accessories</a></li>
+        </ul>
+      </nav>
+    </section>
+    <!-- Section Two -->
+    <section class="one_quarter">
+      <h2 class="title">See Our Fashion Collection</h2>
+      <nav>
+        <ul>
+          <li><a href="https://www.amazon.com/"><img src="images/icons/amazon.png" width="32" height="16" alt=""/></a></li>
+          <li><a href="https://www.ebay.com/"><img src="images/icons/ebay.png" width="32" height="16" alt=""/></a></li>
+          <li><a href="https://www.foursquare.com/"><img src="images/icons/foursquare.png" width="32" height="16" alt=""/></a></li>
+          <li><a href="https://www.pinterest.com/"><img src="images/icons/pinterest.png" width="32" height="16" alt=""/></a></li>
+          
+        </ul>
+      </nav>
+    </section>
+    <!-- Section Three -->
+    <section class="one_quarter">
+      <h2 class="title">Know about Fashion</h2>
+      <nav>
+        <ul>
+          <li><a href="#"></a></li>
+          <li><a href="#">Newyork Fashion week</a></li>
+          <li><a href="#">Summer Fashion -Paris</a></li>
+          <li><a href="#">Women's Fashion Style</a></li>
+          <li><a href="#">Victoria Secret</a></li>
+        </ul>
+      </nav>
+    </section>
+    
+    <!-- Section Four -->
+    <section class="one_quarter lastbox">
+      <h2 class="title">Career</h2>
+      <nav>
+        <ul>
+          <li><a href="http://www.bradley.edu/campuslife/">Browse Jobs</a></li>
+          <li><a href="http://www.bradley.edu/admissions/">Our Employers</a></li>
+          <li><a href="http://www.bradley.edu/academic/colleges/cfa/">Internships</a></li>
+          <li><a href="#http://www.bradley.edu/scc/">Job Advice</a></li>
+        </ul>
+      </nav>
+    </section>
+    <!-- / Section -->
+    
+    
+  </div>
+</div>
+<!-- Copyright -->
+<div class="wrapper row4">
+  <footer id="copyright" class="clear">
+    <p class="fl_left">Copyright &copy; 2017 - <a href="#">Bradley University</a></p>
+    <p class="fl_right">By Mahananda Nyamagouda</p>
+  </footer>
+</div>
+  </body>
+</html>
